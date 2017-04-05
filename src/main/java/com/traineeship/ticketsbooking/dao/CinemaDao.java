@@ -45,7 +45,7 @@ public class CinemaDao {
 		for (int i = 0; i < dataList.getLength(); i++) {
 			date = new Dateclass();
 			Element dateElement = (Element) dataList.item(i);
-			date.setDate(dateElement.getAttribute("value"));
+			date.setDate(dateElement.getAttribute("дата"));
 
 			NodeList films = dateElement.getElementsByTagName("Фильм");
 			Film film = null;
@@ -53,14 +53,14 @@ public class CinemaDao {
 			for (int j = 0; j < films.getLength(); j++) {
 				film = new Film();
 				Element filmElement = (Element) films.item(j);
-				film.setName(filmElement.getAttribute("name"));
+				film.setName(filmElement.getAttribute("название"));
 
 				NodeList seances = filmElement.getElementsByTagName("Сеанс");
 				Seance seance = null;
 				for (int k = 0; k < seances.getLength(); k++) {
 					seance = new Seance();
 					Element seanceElement = (Element) seances.item(k);
-					seance.setSeanceTime(seanceElement.getAttribute("time"));
+					seance.setSeanceTime(seanceElement.getAttribute("время"));
 
 					String placesStr = getSingleChild(seanceElement, "Места")
 							.getTextContent().trim();
@@ -92,14 +92,14 @@ public class CinemaDao {
 
 			List<Dateclass> dates = сinema.getDates();
 			for (Dateclass date : dates) {
-				writer.write("\t<Дата value=\"" + date.getDate() + "\">" + "\n");
+				writer.write("\t<Дата дата=\"" + date.getDate() + "\">" + "\n");
 				List<Film> films = date.getFilms();
 				for (Film film : films) {
-					writer.write("\t\t<Фильм name=\"" + film.getName() + "\">"
-							+ "\n");
+					writer.write("\t\t<Фильм название=\"" + film.getName()
+							+ "\">" + "\n");
 					List<Seance> seances = film.getSeances();
 					for (Seance seance : seances) {
-						writer.write("\t\t\t<Сеанс time=\""
+						writer.write("\t\t\t<Сеанс время=\""
 								+ seance.getSeanceTime() + "\">" + "\n");
 						List<String> places = seance.getFreePlaces();
 						String placesLine = "";
